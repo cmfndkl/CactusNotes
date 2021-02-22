@@ -1,0 +1,2 @@
+rootProject.name = "CactusNotes"
+include ':app'
