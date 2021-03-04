@@ -11,12 +11,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailEditText"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="330dp"
-        android:layout_height="65dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="27dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="18dp"
         android:hint="@string/e_mail"
-        app:boxBackgroundMode="outline">
+        app:boxBackgroundMode="outline"
+        app:errorEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -27,13 +30,14 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/userNameEditText"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="330dp"
-        android:layout_height="65dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="18dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="18dp"
-        android:hint="@string/username">
+        android:hint="@string/username"
+        app:errorEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -44,14 +48,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordEditText"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="330dp"
-        android:layout_height="65dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="18dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="18dp"
         android:hint="@string/password"
         app:endIconMode="password_toggle"
+        app:errorEnabled="false"
         app:layout_constraintTop_toBottomOf="@+id/userNameEditText">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -62,7 +67,7 @@
 
     <Button
         android:id="@+id/sign_up_button"
-        android:layout_width="328dp"
+        android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_gravity="center"
         android:layout_marginStart="16dp"
@@ -74,12 +79,13 @@
     <Button
         android:id="@+id/outlinedButton"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="18dp"
         android:text="@string/already_have_an_account"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_up_button" />
 
