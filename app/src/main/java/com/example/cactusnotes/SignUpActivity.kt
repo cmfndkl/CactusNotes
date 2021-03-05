@@ -1,36 +1,33 @@
 package com.example.cactusnotes
 
 import android.os.Bundle
-import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cactusnotes.databinding.SignUpActivityBinding
-import com.example.cactusnotes.validations.validateEmail
-import com.example.cactusnotes.validations.validatePassword
-import com.example.cactusnotes.validations.validateUsername
-import java.util.regex.Pattern
+import com.example.cactusnotes.validations.*
 
-
-lateinit var binding: SignUpActivityBinding
 
 class SignUpActivity : AppCompatActivity() {
+    private lateinit var binding: SignUpActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SignUpActivityBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-
+        setContentView(binding.root)
 
         binding.signUpButton.setOnClickListener {
-            if (validateEmail() && validateUsername() && validatePassword()) {
-                Toast.makeText(
-                    applicationContext,
-                    getString(R.string.successful),
-                    Toast.LENGTH_LONG
-                ).show()
+            if (isEmailValid() && isUserNameValidation() && isPasswordValid()) {
+                Toast.makeText(applicationContext, R.string.successful, Toast.LENGTH_LONG).show()
             }
         }
     }
+
+    private fun isEmailValid() = binding.emailEditText.isFieldValue(EmailValidator())
+
+    private fun isPasswordValid() = binding.passwordEditText.isFieldValue(PasswordValidator())
+
+    private fun isUserNameValidation() = binding.userNameEditText.isFieldValue(UsernameValidation())
+
+
 }
 
 
