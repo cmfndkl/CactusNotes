@@ -1,10 +1,10 @@
-package com.example.Validaitons
+package com.example.cactusnotes
 
-fun String.hasSpecialCharacter() = any { !it.isLetterOrDigit() }
+fun String.hasSpecialLetters() = any { !it.isLetterOrDigit() }
 
 fun String.isNameValid() = all { it.isDigit() || it.isLowerCase() || it == '_' }
 
-fun String.hasDigitCase() = any { it.isDigit() }
+fun String.hasDigit() = any { it.isDigit() }
 
 fun String.hasUpperCaseLetters() = any { it.isUpperCase() }
 

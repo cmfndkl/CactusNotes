@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sign Up</string>
+    <string name="app_name">CactusNotes</string>
     <string name="already_have_an_account">ALREADY HAVE AN ACCOUNT?</string>
     <string name="sign_up">SIGN UP</string>
     <string name="password">Password</string>

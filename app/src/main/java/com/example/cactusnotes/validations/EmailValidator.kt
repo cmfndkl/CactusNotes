@@ -1,22 +1,20 @@
 package com.example.cactusnotes.validations
 
-import com.example.cactusnotes.ResultValidation
+import com.example.cactusnotes.ValidationResult
 
-class EmailValidator() : ValidateInterface {
-
+class EmailValidator() : Validator {
     private fun String.emailValid() = contains("@") && contains(".")
-
-    override fun value(field: String): ResultValidation {
+    override fun value(field: String): ValidationResult {
         return if (field.isEmpty()) {
-            ResultValidation(false, "Email is required.")
+            ValidationResult(false, "Email is required.")
         } else if (field.emailValid().not()) {
-            ResultValidation(false, "Email is invalid.")
+            ValidationResult(false, "Email is invalid.")
         } else if (field.length < 5) {
-            ResultValidation(false, "Email is invalid")
+            ValidationResult(false, "Email is invalid")
         } else if (field.length > 50) {
-            ResultValidation(false, "Email is invalid")
+            ValidationResult(false, "Email is invalid")
         } else {
-            ResultValidation(true, null)
+            ValidationResult(true, null)
         }
     }
 }

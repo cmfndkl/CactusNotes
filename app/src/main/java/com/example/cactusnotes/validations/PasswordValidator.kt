@@ -1,29 +1,26 @@
 package com.example.cactusnotes.validations
 
-import com.example.Validaitons.hasDigitCase
-import com.example.Validaitons.hasLowerCaseLetters
-import com.example.Validaitons.hasSpecialCharacter
-import com.example.Validaitons.hasUpperCaseLetters
-import com.example.cactusnotes.ResultValidation
 
-class PasswordValidator : ValidateInterface {
-    private fun String.specialPasswordValid() = hasDigitCase() && hasLowerCaseLetters()
-            && hasUpperCaseLetters() && hasSpecialCharacter()
+import com.example.cactusnotes.*
 
-    override fun value(field: String): ResultValidation {
+class PasswordValidator : Validator {
+    private fun String.passwordValid() = hasDigit() && hasLowerCaseLetters()
+            && hasUpperCaseLetters() && hasSpecialLetters()
+
+    override fun value(field: String): ValidationResult {
         return if (field.isEmpty()) {
-            ResultValidation(false, "Password is required.")
+            ValidationResult(false, "Password is required.")
         } else if (field.length < 7) {
-            ResultValidation(false, "Password is too short.")
+            ValidationResult(false, "Password is too short.")
         } else if (field.length > 40) {
-            ResultValidation(false, "Password is too long.")
-        } else if (!field.specialPasswordValid()) {
-            ResultValidation(
+            ValidationResult(false, "Password is too long.")
+        } else if (!field.passwordValid()) {
+            ValidationResult(
                 false, "Password must contain one digit, one uppercase letter, " +
                         "one lowercase letter and one special character."
             )
         } else {
-            ResultValidation(true, null)
+            ValidationResult(true, null)
         }
     }
 }

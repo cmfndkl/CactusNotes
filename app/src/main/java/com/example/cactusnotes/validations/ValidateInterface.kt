@@ -1,7 +1,7 @@
 package com.example.cactusnotes.validations
 
-import com.example.cactusnotes.ResultValidation
+import com.example.cactusnotes.ValidationResult
 
-interface ValidateInterface {
-    fun value(field: String): ResultValidation
+interface Validator {
+    fun value(field: String): ValidationResult
 }
