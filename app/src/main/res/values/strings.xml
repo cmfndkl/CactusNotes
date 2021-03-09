@@ -6,6 +6,9 @@
     <string name="username">Username</string>
     <string name="e_mail">E-mail</string>
     <string name="successful">Successful</string>
+    <string name="e_mail_or_username">E-mail or Username</string>
+    <string name="log_in">Log In</string>
+    <string name="create_an_account">CREATE AN ACCOUNT</string>
 
 
 </resources>

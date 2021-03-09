@@ -1,5 +1,6 @@
 package com.example.cactusnotes
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,11 @@ class SignUpActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, R.string.successful, Toast.LENGTH_LONG).show()
             }
         }
+        binding.haveAnAccountButton.setOnClickListener {
+            val intent = Intent(applicationContext,LogInActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun isEmailValid() = binding.emailEditText.isFieldValid(EmailValidator())

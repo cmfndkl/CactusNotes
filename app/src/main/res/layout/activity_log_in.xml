@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".SignUpActivity">
+
+    tools:context=".LogInActivity">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailEditText"
+        android:id="@+id/emailOrUsername"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,35 +18,18 @@
         android:layout_marginStart="18dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="18dp"
-        android:hint="@string/e_mail"
-        app:errorEnabled="false">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/userNameEditText"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="18dp"
-        android:hint="@string/username"
+        android:hint="@string/e_mail_or_username"
         app:errorEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordEditText"
+        android:id="@+id/logInPassword"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,18 +49,18 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/sign_up_button"
+        android:id="@+id/log_in_button"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_gravity="center"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="18dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/sign_up"
+        android:layout_marginEnd="18dp"
+        android:text="@string/log_in"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
     <Button
-        android:id="@+id/haveAnAccount_button"
+        android:id="@+id/createAccountButton"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,7 +68,7 @@
         android:layout_marginStart="18dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="18dp"
-        android:text="@string/already_have_an_account"
+        android:text="@string/create_an_account"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_up_button" />
 
