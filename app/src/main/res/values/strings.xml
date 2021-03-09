@@ -19,4 +19,7 @@
     <string name="password_long">Password is too long</string>
     <string name="password_special_character">Password must contain one digit, one uppercase letter,
         one lowercase letter and one special character</string>
+    <string name="e_mail_or_username">E-mail or Username</string>
+    <string name="log_in">Log In</string>
+    <string name="create_an_account">CREATE AN ACCOUNT</string>
 </resources>
