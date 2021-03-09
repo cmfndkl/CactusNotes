@@ -11,5 +11,4 @@ class LogInPasswordValidator : Validator {
             ValidationResult(true, null)
         }
     }
-
 }

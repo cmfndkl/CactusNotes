@@ -20,15 +20,12 @@ class LogInActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, R.string.log_in, Toast.LENGTH_LONG).show()
             }
         }
-
         binding.createAccountButton.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
-
     }
 
-
     private fun isEmailOrUsernameValid() = binding.emailOrUsername.isFieldValid(LogInValidator())
-    private fun isPasswordValid() = binding.logInPassword.isFieldValid(LogInValidator())
 
+    private fun isPasswordValid() = binding.logInPassword.isFieldValid(LogInValidator())
 }
