@@ -1,3 +1,3 @@
 package com.example.cactusnotes
 
-data class ValidationResult(val isValid: Boolean, val errorMessage: String?)
+data class ValidationResult(val isValid: Boolean, val errorMessage: Int?)

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.cactusnotes.databinding.SignUpActivityBinding
 import com.example.cactusnotes.validations.EmailValidator
 import com.example.cactusnotes.validations.PasswordValidator
-import com.example.cactusnotes.validations.UsernameValidation
+import com.example.cactusnotes.validations.UsernameValidator
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -15,10 +15,10 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = SignUpActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        this.setTitle("Sign Up")
+        supportActionBar?.title = getString(R.string.signUp)
 
         binding.signUpButton.setOnClickListener {
-            if (isEmailValid() && isUserNameValidation() && isPasswordValid()) {
+            if (isEmailValid() && isUserNameValid() && isPasswordValid()) {
                 Toast.makeText(applicationContext, R.string.successful, Toast.LENGTH_LONG).show()
             }
         }
@@ -28,7 +28,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun isPasswordValid() = binding.passwordEditText.isFieldValid(PasswordValidator())
 
-    private fun isUserNameValidation() = binding.userNameEditText.isFieldValid(UsernameValidation())
+    private fun isUserNameValid() = binding.userNameEditText.isFieldValid(UsernameValidator())
 
 
 }

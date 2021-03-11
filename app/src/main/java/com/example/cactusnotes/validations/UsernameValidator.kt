@@ -1,18 +1,19 @@
 package com.example.cactusnotes.validations
 
+import com.example.cactusnotes.R
 import com.example.cactusnotes.ValidationResult
 import com.example.cactusnotes.isNameValid
 
-class UsernameValidation() : Validator {
+class UsernameValidator() : Validator {
     override fun value(field: String): ValidationResult {
         return if (field.isEmpty()) {
-            ValidationResult(false, "Username is required")
+            ValidationResult(false, R.string.required)
         } else if (field.length < 2) {
-            ValidationResult(false, "Username is too short.")
+            ValidationResult(false, R.string.userNameSort)
         } else if (field.length > 20) {
-            ValidationResult(false, "Username is too long.")
+            ValidationResult(false, R.string.userNameLong)
         } else if (!field.isNameValid()) {
-            ValidationResult(false, "Username can only include a–z, 0–9 and _ characters.")
+            ValidationResult(false, R.string.isValidError)
         } else {
             ValidationResult(true, null)
         }

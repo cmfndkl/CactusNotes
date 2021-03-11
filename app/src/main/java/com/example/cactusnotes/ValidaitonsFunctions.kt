@@ -4,7 +4,7 @@ fun String.hasSpecialLetters() = any { !it.isLetterOrDigit() }
 
 fun String.isNameValid() = all { it.isDigit() || it.isLowerCase() || it == '_' }
 
-fun String.hasDigit() = any { it.isDigit() }
+fun String.hasDigits() = any { it.isDigit() }
 
 fun String.hasUpperCaseLetters() = any { it.isUpperCase() }
 
