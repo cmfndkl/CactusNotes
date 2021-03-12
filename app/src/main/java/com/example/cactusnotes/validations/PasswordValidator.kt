@@ -6,9 +6,15 @@ class PasswordValidator : Validator {
     override fun validate(field: String) = when {
         field.isEmpty() -> { ValidationResult(false, R.string.password_empty) }
         field.length < 7 -> { ValidationResult(false, R.string.password_short) }
-        field.length > 40 -> { ValidationResult(false, R.string.password_long) }
-        !field.containsRequiredCharCharacters() -> { ValidationResult(false, R.string.password_special_character) }
-        else -> { ValidationResult(true, null) }
+        field.length > 40 -> {
+            ValidationResult(false, R.string.password_long)
+        }
+        !field.containsRequiredCharacters() -> {
+            ValidationResult(false, R.string.password_special_character)
+        }
+        else -> {
+            ValidationResult(true, null)
+        }
     }
 
     private fun String.hasDigits() = any { it.isDigit() }
@@ -19,7 +25,7 @@ class PasswordValidator : Validator {
 
     private fun String.hasSpecialLetters() = any { !it.isLetterOrDigit() }
 
-    private fun String.containsRequiredCharCharacters() = hasDigits() && hasLowerCaseLetters()
+    private fun String.containsRequiredCharacters() = hasDigits() && hasLowerCaseLetters()
             && hasUpperCaseLetters() && hasSpecialLetters()
 
 }
