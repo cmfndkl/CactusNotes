@@ -3,21 +3,13 @@ package com.example.cactusnotes.validations
 import com.example.cactusnotes.R
 import com.example.cactusnotes.ValidationResult
 
-class EmailValidator() : Validator {
-    private fun String.isEmailValid() = contains("@") && contains(".")
-
-    override fun value(field: String): ValidationResult {
-
-        return if (field.isEmpty()) {
-            ValidationResult(false, R.string.required)
-        } else if (field.isEmailValid().not()) {
-            ValidationResult(false, R.string.emailInvalid)
-        } else if (field.length < 5) {
-            ValidationResult(false, R.string.emailInvalid)
-        } else if (field.length > 50) {
-            ValidationResult(false, R.string.emailInvalid)
-        } else {
-            ValidationResult(true, null)
-        }
+class EmailValidator : Validator {
+    private fun String.containsAtAndDot() = contains("@") && contains(".")
+    override fun validate(field: String) = when {
+        field.isEmpty() -> { ValidationResult(false, R.string.required) }
+        field.containsAtAndDot().not() -> { ValidationResult(false, R.string.email_invalid) }
+        field.length < 5 -> { ValidationResult(false, R.string.email_invalid) }
+        field.length > 50 -> { ValidationResult(false, R.string.email_invalid) }
+        else -> { ValidationResult(true, null) }
     }
 }

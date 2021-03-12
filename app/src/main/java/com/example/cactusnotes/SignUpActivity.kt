@@ -8,28 +8,24 @@ import com.example.cactusnotes.validations.EmailValidator
 import com.example.cactusnotes.validations.PasswordValidator
 import com.example.cactusnotes.validations.UsernameValidator
 
-
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: SignUpActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SignUpActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.title = getString(R.string.signUp)
+        supportActionBar?.title = getString(R.string.sign_up)
 
         binding.signUpButton.setOnClickListener {
-            if (isEmailValid() && isUserNameValid() && isPasswordValid()) {
+            if (isEmailValid() && isUsernameValid() && isPasswordValid()) {
                 Toast.makeText(applicationContext, R.string.successful, Toast.LENGTH_LONG).show()
             }
         }
     }
 
     private fun isEmailValid() = binding.emailEditText.isFieldValid(EmailValidator())
-
     private fun isPasswordValid() = binding.passwordEditText.isFieldValid(PasswordValidator())
-
-    private fun isUserNameValid() = binding.userNameEditText.isFieldValid(UsernameValidator())
-
+    private fun isUsernameValid() = binding.userNameEditText.isFieldValid(UsernameValidator())
 
 }
 

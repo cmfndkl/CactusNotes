@@ -7,17 +7,16 @@
     <string name="e_mail">E-mail</string>
     <string name="successful">Successful</string>
     <string name="required">Email is required</string>
-    <string name="signUp">Sign Up</string>
     <string name="invalid">Email is invalid</string>
     <string name="password_required">Password is required</string>
-    <string name="emailInvalid">Email is invalid</string>
-    <string name="userNameRequired">Username is required</string>
-    <string name="isValidError">Username can only include a–z, 0–9 and _ characters</string>
-    <string name="userNameSort">Username is too short</string>
-    <string name="userNameLong">Username is too long</string>
-    <string name="passwordEmpty">Password is required</string>
-    <string name="passwordShort">Password is too short</string>
-    <string name="passwordLong">Password is too long</string>
-    <string name="passwordSpecialCharacter">Password must contain one digit, one uppercase letter,
+    <string name="email_invalid">Email is invalid</string>
+    <string name="user_name_required">Username is required</string>
+    <string name="is_valid_error">Username can only include a–z, 0–9 and _ characters</string>
+    <string name="user_name_sort">Username is too short</string>
+    <string name="user_name_long">Username is too long</string>
+    <string name="password_empty">Password is required</string>
+    <string name="password_short">Password is too short</string>
+    <string name="password_long">Password is too long</string>
+    <string name="password_special_character">Password must contain one digit, one uppercase letter,
         one lowercase letter and one special character</string>
 </resources>
