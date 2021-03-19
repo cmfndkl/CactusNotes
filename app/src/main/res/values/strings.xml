@@ -31,4 +31,5 @@
     <string name="e_mail_or_username">E-mail or Username</string>
     <string name="log_in">Log In</string>
     <string name="create_an_account">CREATE AN ACCOUNT</string>
+    <string name="email_required">Email or username is required.</string>
 </resources>
