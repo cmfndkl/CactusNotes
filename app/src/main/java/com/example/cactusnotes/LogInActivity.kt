@@ -1,15 +1,12 @@
 package com.example.cactusnotes
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.AbsListView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.cactusnotes.databinding.ActivityLogInBinding
-import com.example.cactusnotes.validations.EmailValidator
 import com.example.cactusnotes.validations.LogInValidator
-import java.lang.reflect.Field
 
 class LogInActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLogInBinding
@@ -17,18 +14,20 @@ class LogInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLogInBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        this.setTitle("Log In")
+        this.setTitle(R.string.log_in)
 
         binding.logInButton.setOnClickListener {
             if (isEmailOrUsernameValid() && isPasswordValid()) {
-                Toast.makeText(applicationContext, "Log In", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, R.string.log_in, Toast.LENGTH_LONG).show()
             }
         }
-        binding.createAccountButton.setOnClickListener {
 
+        binding.createAccountButton.setOnClickListener {
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
 
     }
+
 
     private fun isEmailOrUsernameValid() = binding.emailOrUsername.isFieldValid(LogInValidator())
     private fun isPasswordValid() = binding.logInPassword.isFieldValid(LogInValidator())

@@ -1,5 +1,6 @@
 package com.example.cactusnotes
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,9 @@ class SignUpActivity : AppCompatActivity() {
             if (isEmailValid() && isUsernameValid() && isPasswordValid()) {
                 Toast.makeText(applicationContext, R.string.successful, Toast.LENGTH_LONG).show()
             }
+        }
+        binding.alreadyHaveAnAccountButton.setOnClickListener {
+            startActivity(Intent(this, LogInActivity::class.java))
         }
     }
 
