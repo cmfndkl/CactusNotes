@@ -19,6 +19,8 @@
     <string name="password_long">Password is too long</string>
     <string name="password_special_character">Password must contain one digit, one uppercase letter,
         one lowercase letter and one special character</string>
+    <string name="connectivity_problems_message">Couldn’t connect to the servers. Please check your connection.</string>
+    <string name="some_error_message">Some error occurred. Please try again later.</string>
     <string name="e_mail_or_username">E-mail or Username</string>
     <string name="log_in">Log In</string>
     <string name="create_an_account">CREATE AN ACCOUNT</string>
