@@ -94,6 +94,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun isPasswordValid() = binding.passwordEditText.isFieldValid(PasswordValidator())
 
     private fun isUsernameValid() = binding.userNameEditText.isFieldValid(UsernameValidator())
+
 }
 
 
