@@ -1,9 +1,7 @@
 package com.example.cactusnotes
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cactusnotes.databinding.SignUpActivityBinding
 import com.example.cactusnotes.model.CactusModel
@@ -20,6 +18,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: SignUpActivityBinding
@@ -43,13 +42,15 @@ class SignUpActivity : AppCompatActivity() {
                     binding.userNameEditText.editText?.text.toString(),
                     binding.passwordEditText.editText?.text.toString()
                 )
+
                 api.register(request).enqueue(object : Callback<RegisterResponse> {
                     override fun onResponse(
                         call: Call<RegisterResponse>,
                         response: Response<RegisterResponse>
                     ) {
                         if (response.isSuccessful) {
-                            Snackbar.make(binding.root, "Registered", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(binding.root, R.string.successful, Snackbar.LENGTH_LONG)
+                                .show()
                         } else {
                             val errorBody = response.errorBody()!!.string()
                             val errorResponse = GsonBuilder()
@@ -57,17 +58,24 @@ class SignUpActivity : AppCompatActivity() {
                                 .fromJson(errorBody, RegisterErrorResponse::class.java)
                             val message = errorResponse.message[0].messages[0].message
                             val statusCode = errorResponse.statusCode
-                            Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+                            if (statusCode in 400..499) {
+                                Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+                            } else if (statusCode in 500..599) {
+                                Snackbar.make(
+                                    binding.root,
+                                    getString(R.string.some_error_message),
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            }
                         }
                     }
 
                     override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
                         Snackbar.make(
                             binding.root,
-                            "Couldn’t connect to the servers. Please check your connection.",
+                            getString(R.string.connectivity_problems_message),
                             Snackbar.LENGTH_LONG
                         ).show()
-                        t.printStackTrace()
                     }
                 })
             }
