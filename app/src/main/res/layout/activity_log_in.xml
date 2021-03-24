@@ -57,6 +57,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="18dp"
         android:text="@string/log_in"
+        app:errorEnabled="false"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
     <com.google.android.material.button.MaterialButton
@@ -69,6 +70,7 @@
         android:layout_marginTop="18dp"
         android:layout_marginEnd="18dp"
         android:text="@string/create_an_account"
+        app:errorEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_up_button" />
 
