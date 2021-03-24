@@ -21,4 +21,5 @@
         one lowercase letter and one special character</string>
     <string name="connectivity_problems_message">Couldn’t connect to the servers. Please check your connection.</string>
     <string name="some_error_message">Some error occurred. Please try again later.</string>
+    <string name="other_error_message">"Please try again later."</string>
 </resources>
