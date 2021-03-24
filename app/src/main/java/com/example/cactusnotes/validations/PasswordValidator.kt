@@ -1,11 +1,16 @@
 package com.example.cactusnotes.validations
+
 import com.example.cactusnotes.*
 
 class PasswordValidator : Validator {
 
     override fun validate(field: String) = when {
-        field.isEmpty() -> { ValidationResult(false, R.string.password_empty) }
-        field.length < 7 -> { ValidationResult(false, R.string.password_short) }
+        field.isEmpty() -> {
+            ValidationResult(false, R.string.password_empty)
+        }
+        field.length < 7 -> {
+            ValidationResult(false, R.string.password_short)
+        }
         field.length > 40 -> {
             ValidationResult(false, R.string.password_long)
         }
@@ -27,5 +32,4 @@ class PasswordValidator : Validator {
 
     private fun String.containsRequiredCharacters() = hasDigits() && hasLowerCaseLetters()
             && hasUpperCaseLetters() && hasSpecialLetters()
-
 }
