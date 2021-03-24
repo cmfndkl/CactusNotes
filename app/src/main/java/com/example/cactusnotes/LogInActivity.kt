@@ -14,22 +14,18 @@ class LogInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLogInBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        this.setTitle(R.string.log_in)
+        supportActionBar?.title = getString(R.string.log_in)
 
         binding.logInButton.setOnClickListener {
             if (isEmailOrUsernameValid() && isPasswordValid()) {
                 Toast.makeText(applicationContext, R.string.log_in, Toast.LENGTH_LONG).show()
             }
         }
-
         binding.createAccountButton.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
-
     }
-
 
     private fun isEmailOrUsernameValid() = binding.emailOrUsername.isFieldValid(LogInValidator())
     private fun isPasswordValid() = binding.logInPassword.isFieldValid(LogInValidator())
-
 }
