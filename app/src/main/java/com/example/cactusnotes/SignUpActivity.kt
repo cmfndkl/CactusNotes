@@ -3,7 +3,6 @@ package com.example.cactusnotes
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cactusnotes.databinding.SignUpActivityBinding
-import com.example.cactusnotes.model.CactusModel
 import com.example.cactusnotes.model.RegisterErrorResponse
 import com.example.cactusnotes.model.RegisterResponse
 import com.example.cactusnotes.service.api
@@ -17,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
+
     private lateinit var binding: SignUpActivityBinding
 
 
