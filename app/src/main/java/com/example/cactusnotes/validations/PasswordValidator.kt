@@ -32,5 +32,4 @@ class PasswordValidator : Validator {
 
     private fun String.containsRequiredCharacters() = hasDigits() && hasLowerCaseLetters()
             && hasUpperCaseLetters() && hasSpecialLetters()
-
 }
