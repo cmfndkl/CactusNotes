@@ -90,57 +90,6 @@ class SignUpActivity : AppCompatActivity() {
         })
     }
 
-    private fun sendRegisterRequest() {
-        val request = RegisterRequest(
-            binding.emailEditText.editText!!.text.toString(),
-            binding.userNameEditText.editText!!.text.toString(),
-            binding.passwordEditText.editText!!.text.toString()
-        )
-
-        api.register(request).enqueue(object : Callback<RegisterResponse> {
-            override fun onResponse(
-                call: Call<RegisterResponse>,
-                response: Response<RegisterResponse>
-            ) {
-                if (response.isSuccessful) {
-                    Snackbar.make(binding.root, R.string.successful, LENGTH_LONG).show()
-                } else {
-                    val errorBody = response.errorBody()!!.string()
-
-                    val errorResponse = try {
-                        GsonBuilder()
-                            .create()
-                            .fromJson(errorBody, RegisterErrorResponse::class.java)
-                    } catch (ex: JsonSyntaxException) {
-                        null
-                    }
-
-                    val errorMessageToDisplay = when (errorResponse) {
-                        null -> getString(R.string.unexpected_error_occurred)
-                        else -> {
-                            val message = errorResponse.message[0].messages[0].message
-                            when (errorResponse.statusCode) {
-                                in 400..499 -> message
-                                in 500..599 -> getString(R.string.some_error_message)
-                                else -> getString(R.string.unexpected_error_occurred)
-                            }
-                        }
-                    }
-
-                    Snackbar.make(binding.root, errorMessageToDisplay, LENGTH_LONG).show()
-                }
-            }
-
-            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.connectivity_problems_message),
-                    LENGTH_LONG
-                ).show()
-            }
-        })
-    }
-
     private fun isEmailValid() = binding.emailEditText.isFieldValid(EmailValidator())
 
     private fun isPasswordValid() = binding.passwordEditText.isFieldValid(PasswordValidator())
