@@ -28,4 +28,5 @@
     <string name="create_an_account">CREATE AN ACCOUNT</string>
     <string name="email_required">Email or username is required.</string>
     <string name="invalid_login_message">Invalid credentials. Please double-check your e-mail, username or password.</string>
+    <string name="login_password_empty">Password is required.</string>
 </resources>
