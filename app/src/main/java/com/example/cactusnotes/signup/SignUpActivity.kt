@@ -1,13 +1,17 @@
-package com.example.cactusnotes
+package com.example.cactusnotes.signup
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.SignUpActivityBinding
-import com.example.cactusnotes.model.RegisterErrorResponse
-import com.example.cactusnotes.model.RegisterRequest
-import com.example.cactusnotes.model.RegisterResponse
+import com.example.cactusnotes.isFieldValid
+import com.example.cactusnotes.login.LogInActivity
 import com.example.cactusnotes.service.api
+import com.example.cactusnotes.signup.data.RegisterErrorResponse
+import com.example.cactusnotes.signup.data.RegisterRequest
+import com.example.cactusnotes.signup.data.RegisterResponse
+import com.example.cactusnotes.userstore.UserStore
 import com.example.cactusnotes.validations.EmailValidator
 import com.example.cactusnotes.validations.PasswordValidator
 import com.example.cactusnotes.validations.UsernameValidator
@@ -53,6 +57,8 @@ class SignUpActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     Snackbar.make(binding.root, R.string.successful, LENGTH_LONG).show()
+                    val userStore = UserStore(this@SignUpActivity)
+                    userStore.saveJwt(response.body()!!.jwt)
                 } else {
                     val errorBody = response.errorBody()!!.string()
 
