@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     android:orientation="vertical"
 
-    tools:context=".LogInActivity">
+    tools:context=".login.LogInActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailOrUsername"

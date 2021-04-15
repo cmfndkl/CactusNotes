@@ -1,7 +1,6 @@
 package com.example.cactusnotes.validations
 
 import com.example.cactusnotes.R
-import com.example.cactusnotes.ValidationResult
 
 class EmailValidator : Validator {
     private fun String.containsAtAndDot() = contains("@") && contains(".")
