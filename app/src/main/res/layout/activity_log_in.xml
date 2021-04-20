@@ -63,7 +63,7 @@
         android:id="@+id/createAccountButton"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:layout_gravity="center"
         android:layout_marginStart="18dp"
         android:layout_marginTop="18dp"

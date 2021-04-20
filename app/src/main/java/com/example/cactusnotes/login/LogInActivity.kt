@@ -12,7 +12,9 @@ import com.example.cactusnotes.login.data.LoginResponse
 import com.example.cactusnotes.service.api
 import com.example.cactusnotes.signup.SignUpActivity
 import com.example.cactusnotes.userstore.UserStore
+import com.example.cactusnotes.validations.LogInPasswordValidator
 import com.example.cactusnotes.validations.LogInValidator
+import com.example.cactusnotes.validations.ValidationResult
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
@@ -39,7 +41,7 @@ class LogInActivity : AppCompatActivity() {
 
     private fun isEmailOrUsernameValid() = binding.emailOrUsername.isFieldValid(LogInValidator())
 
-    private fun isPasswordValid() = binding.logInPassword.isFieldValid(LogInValidator())
+    private fun isPasswordValid() = binding.logInPassword.isFieldValid(LogInPasswordValidator())
 
     private fun sendLoginRequest() {
         val loginRequest = LoginRequest(
