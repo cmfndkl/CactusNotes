@@ -3,6 +3,7 @@ package com.example.cactusnotes.login
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cactusnotes.NoteListActivity
 import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.ActivityLogInBinding
 import com.example.cactusnotes.isFieldValid
@@ -57,6 +58,7 @@ class LogInActivity : AppCompatActivity() {
                     Snackbar.make(binding.root, R.string.successful, Snackbar.LENGTH_LONG).show()
                     val userStore = UserStore(this@LogInActivity)
                     userStore.saveJwt(response.body()!!.jwt)
+                    startActivity(Intent(this@LogInActivity, NoteListActivity::class.java))
                 } else {
                     val errorBody = response.errorBody()!!.string()
                     val errorResponse = try {
