@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CactusNotes">
-        <activity android:name=".notelistui.NoteListActivity" />
+        <activity android:name=".note.list.NoteListActivity" />
         <activity
             android:name=".signup.SignUpActivity"
             android:launchMode="singleTask"

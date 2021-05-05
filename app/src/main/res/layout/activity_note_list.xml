@@ -7,7 +7,7 @@
     android:background="@color/grey"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".notelistui.NoteListActivity">
+    tools:context=".note.list.NoteListActivity">
 
     <ImageView
         android:id="@+id/imageView"

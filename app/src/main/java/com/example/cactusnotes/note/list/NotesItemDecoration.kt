@@ -1,4 +1,4 @@
-package com.example.cactusnotes.notelistui
+package com.example.cactusnotes.note.list
 
 import android.graphics.Rect
 import android.view.View

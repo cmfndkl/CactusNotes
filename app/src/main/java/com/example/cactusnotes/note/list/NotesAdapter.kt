@@ -1,15 +1,12 @@
-package com.example.cactusnotes.notelistui.adapter
+package com.example.cactusnotes.note.list
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.LayoutGridItemBinding
-import com.example.cactusnotes.notelistui.Notes
+import com.example.cactusnotes.note.Note
 
-class NotesAdapter(var noteList: List<Notes>) :
+class NotesAdapter(var noteList: List<Note>) :
     RecyclerView.Adapter<NotesAdapter.NotesHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesHolder {
         val binding =
@@ -19,7 +16,7 @@ class NotesAdapter(var noteList: List<Notes>) :
 
     override fun onBindViewHolder(holder: NotesHolder, position: Int) {
         holder.binding.notesTitle.text = noteList[position].title
-        holder.binding.notesText.text = noteList[position].note
+        holder.binding.notesText.text = noteList[position].content
     }
 
     override fun getItemCount(): Int = noteList.size
