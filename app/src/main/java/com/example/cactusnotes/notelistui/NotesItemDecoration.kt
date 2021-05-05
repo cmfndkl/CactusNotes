@@ -3,6 +3,7 @@ package com.example.cactusnotes.notelistui
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.cactusnotes.R
 
 class NotesItemDecoration : RecyclerView.ItemDecoration() {
@@ -21,7 +22,8 @@ class NotesItemDecoration : RecyclerView.ItemDecoration() {
         )
 
         val isOnFirstLine = position < 2
-        val isAtRight = position % 2 == 1
+        val isAtRight =
+            (view.layoutParams as StaggeredGridLayoutManager.LayoutParams).spanIndex == 1
         if (isAtRight) {
             outRect.left = spacing / 2
             outRect.right = spacing
