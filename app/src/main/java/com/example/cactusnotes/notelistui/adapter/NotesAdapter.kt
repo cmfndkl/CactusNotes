@@ -1,16 +1,15 @@
-package com.example.cactusnotes.adapter
+package com.example.cactusnotes.notelistui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cactusnotes.Notes
 import com.example.cactusnotes.R
+import com.example.cactusnotes.notelistui.Notes
 
-class StaggeredRecyclerViewAdapter(var noteList: ArrayList<Notes>) :
-    RecyclerView.Adapter<StaggeredRecyclerViewAdapter.NotesHolder>() {
-
+class NotesAdapter(var noteList: List<Notes>) :
+    RecyclerView.Adapter<NotesAdapter.NotesHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_grid_item, parent, false)
@@ -27,6 +26,5 @@ class StaggeredRecyclerViewAdapter(var noteList: ArrayList<Notes>) :
     class NotesHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val noteTitle: TextView = itemView.findViewById<TextView>(R.id.notesTitle)
         val noteText: TextView = itemView.findViewById<TextView>(R.id.notesText)
-
     }
 }

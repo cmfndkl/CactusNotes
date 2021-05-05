@@ -3,7 +3,7 @@ package com.example.cactusnotes.login
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.cactusnotes.NoteListActivity
+import com.example.cactusnotes.notelistui.NoteListActivity
 import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.ActivityLogInBinding
 import com.example.cactusnotes.isFieldValid
@@ -15,7 +15,6 @@ import com.example.cactusnotes.signup.SignUpActivity
 import com.example.cactusnotes.userstore.UserStore
 import com.example.cactusnotes.validations.LogInPasswordValidator
 import com.example.cactusnotes.validations.LogInValidator
-import com.example.cactusnotes.validations.ValidationResult
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
@@ -59,6 +58,7 @@ class LogInActivity : AppCompatActivity() {
                     val userStore = UserStore(this@LogInActivity)
                     userStore.saveJwt(response.body()!!.jwt)
                     startActivity(Intent(this@LogInActivity, NoteListActivity::class.java))
+                    finish()
                 } else {
                     val errorBody = response.errorBody()!!.string()
                     val errorResponse = try {

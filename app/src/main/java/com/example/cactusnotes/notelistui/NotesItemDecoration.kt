@@ -1,9 +1,9 @@
-package com.example.cactusnotes
+package com.example.cactusnotes.notelistui
 
 import android.graphics.Rect
-import android.util.TypedValue
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cactusnotes.R
 
 class NotesItemDecoration : RecyclerView.ItemDecoration() {
 

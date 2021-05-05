@@ -1,8 +1,8 @@
-package com.example.cactusnotes
+package com.example.cactusnotes.notelistui
 
 data class Notes(var title: String, var note: String)
 
-val noteList = arrayListOf<Notes>(
+val noteList = listOf(
     Notes("Remember", "Doing is important!"),
     Notes("Shopping List", "Carrots, Bananas, Apples, Milk"),
     Notes("Learn Kotlin", "Extensions functions are of a great help when creating a clean.."),
