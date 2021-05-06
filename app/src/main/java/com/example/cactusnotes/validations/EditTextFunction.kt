@@ -1,6 +1,5 @@
-package com.example.cactusnotes
+package com.example.cactusnotes.validations
 
-import com.example.cactusnotes.validations.Validator
 import com.google.android.material.textfield.TextInputLayout
 
 fun TextInputLayout.isFieldValid(validator: Validator): Boolean {

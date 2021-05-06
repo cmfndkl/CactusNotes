@@ -5,16 +5,16 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.ActivityLogInBinding
-import com.example.cactusnotes.isFieldValid
 import com.example.cactusnotes.login.data.LoginErrorResponse
 import com.example.cactusnotes.login.data.LoginRequest
 import com.example.cactusnotes.login.data.LoginResponse
+import com.example.cactusnotes.note.list.NoteListActivity
 import com.example.cactusnotes.service.api
 import com.example.cactusnotes.signup.SignUpActivity
 import com.example.cactusnotes.userstore.UserStore
 import com.example.cactusnotes.validations.LogInPasswordValidator
 import com.example.cactusnotes.validations.LogInValidator
-import com.example.cactusnotes.validations.ValidationResult
+import com.example.cactusnotes.validations.isFieldValid
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
@@ -54,9 +54,9 @@ class LogInActivity : AppCompatActivity() {
                 response: Response<LoginResponse>
             ) {
                 if (response.isSuccessful) {
-                    Snackbar.make(binding.root, R.string.successful, Snackbar.LENGTH_LONG).show()
-                    val userStore = UserStore(this@LogInActivity)
-                    userStore.saveJwt(response.body()!!.jwt)
+                    showSnackbar(R.string.successful)
+                    saveJwt(response.body()!!.jwt)
+                    navigateToNoteList()
                 } else {
                     val errorBody = response.errorBody()!!.string()
                     val errorResponse = try {
@@ -77,17 +77,29 @@ class LogInActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    Snackbar.make(binding.root, errorMessageToDisplay, Snackbar.LENGTH_LONG).show()
+                    showSnackbar(errorMessageToDisplay)
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.connectivity_problems_message),
-                    Snackbar.LENGTH_LONG
-                ).show()
+                showSnackbar(getString(R.string.connectivity_problems_message))
             }
         })
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun showSnackbar(messageResId: Int) = showSnackbar(getString(messageResId))
+
+    private fun saveJwt(jwt: String) {
+        val userStore = UserStore(this@LogInActivity)
+        userStore.saveJwt(jwt)
+    }
+
+    private fun navigateToNoteList() {
+        startActivity(Intent(this@LogInActivity, NoteListActivity::class.java))
+        finish()
     }
 }

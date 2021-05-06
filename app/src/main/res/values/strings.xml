@@ -29,4 +29,7 @@
     <string name="email_required">Email or username is required.</string>
     <string name="invalid_login_message">Invalid credentials. Please double-check your e-mail, username or password.</string>
     <string name="login_password_empty">Password is required.</string>
+    <string name="note_list_bar">Cactus Notes</string>
+    <string name="any_notes">You don\'t have any notes. Click below button to add one!</string>
+    <string name="offline_note_error">Couldn\'t connect to the servers. Please check your connection.</string>
 </resources>

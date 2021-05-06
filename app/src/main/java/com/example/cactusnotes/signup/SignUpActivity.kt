@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.SignUpActivityBinding
-import com.example.cactusnotes.isFieldValid
 import com.example.cactusnotes.login.LogInActivity
 import com.example.cactusnotes.service.api
 import com.example.cactusnotes.signup.data.RegisterErrorResponse
@@ -15,6 +14,7 @@ import com.example.cactusnotes.userstore.UserStore
 import com.example.cactusnotes.validations.EmailValidator
 import com.example.cactusnotes.validations.PasswordValidator
 import com.example.cactusnotes.validations.UsernameValidator
+import com.example.cactusnotes.validations.isFieldValid
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import com.google.gson.GsonBuilder
