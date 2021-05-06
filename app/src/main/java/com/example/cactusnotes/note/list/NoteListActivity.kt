@@ -1,13 +1,17 @@
 package com.example.cactusnotes.note.list
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.ActivityNoteListBinding
+import com.example.cactusnotes.login.LogInActivity
 import com.example.cactusnotes.note.list.NoteListActivity.UiState.*
+import com.example.cactusnotes.userstore.UserStore
 import com.google.android.material.snackbar.Snackbar
 
 class NoteListActivity : AppCompatActivity() {
@@ -57,7 +61,23 @@ class NoteListActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.logout_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+
+
+        return true
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val userStore = UserStore(this)
+        return when (item.itemId) {
+            R.id.log_out -> {
+                userStore.deleteJwt()
+                startActivity(Intent(this, LogInActivity::class.java))
+                finish()
+                true
+            }
+            else -> false
+        }
     }
 
     enum class UiState {
