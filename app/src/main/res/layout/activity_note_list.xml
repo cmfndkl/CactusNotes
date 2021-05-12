@@ -9,6 +9,17 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".note.list.NoteListActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="96dp"
@@ -29,7 +40,7 @@
         app:layout_anchorGravity="center" />
 
     <TextView
-        android:id="@+id/notesTextView"
+        android:id="@+id/emptyText"
         android:layout_width="216dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="164dp"
@@ -52,16 +63,5 @@
         app:layout_anchorGravity="end|bottom"
         app:srcCompat="@drawable/ic_plus_24"
         app:tint="@color/white" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
