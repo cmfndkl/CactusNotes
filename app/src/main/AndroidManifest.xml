@@ -14,11 +14,11 @@
         android:theme="@style/Theme.CactusNotes">
         <activity android:name=".note.list.NoteListActivity" />
         <activity
-            android:name=".signup.SignUpActivity"
+            android:name=".login.LogInActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".login.LogInActivity"
+            android:name=".signup.SignUpActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

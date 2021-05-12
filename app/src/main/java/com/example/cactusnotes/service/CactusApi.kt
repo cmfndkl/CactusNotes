@@ -2,10 +2,12 @@ package com.example.cactusnotes.service
 
 import com.example.cactusnotes.login.data.LoginRequest
 import com.example.cactusnotes.login.data.LoginResponse
+import com.example.cactusnotes.note.data.Note
 import com.example.cactusnotes.signup.data.RegisterRequest
 import com.example.cactusnotes.signup.data.RegisterResponse
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface CactusApi {
@@ -14,4 +16,7 @@ interface CactusApi {
 
     @POST("/auth/local")
     fun login(@Body requestLogin: LoginRequest): Call<LoginResponse>
+
+    @GET("/notes")
+    fun readAllNotes(): Call<List<Note>>
 }

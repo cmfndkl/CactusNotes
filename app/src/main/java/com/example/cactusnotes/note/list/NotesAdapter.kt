@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cactusnotes.databinding.LayoutGridItemBinding
-import com.example.cactusnotes.note.Note
+import com.example.cactusnotes.note.NoteItem
 
-class NotesAdapter(var noteList: List<Note>) :
+class NotesAdapter(var noteList: List<NoteItem>) :
     RecyclerView.Adapter<NotesAdapter.NotesHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesHolder {
         val binding =

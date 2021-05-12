@@ -80,7 +80,6 @@ class LogInActivity : AppCompatActivity() {
                     showSnackbar(errorMessageToDisplay)
                 }
             }
-
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 showSnackbar(getString(R.string.connectivity_problems_message))
             }

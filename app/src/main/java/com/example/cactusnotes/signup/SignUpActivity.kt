@@ -32,7 +32,6 @@ class SignUpActivity : AppCompatActivity() {
         binding = SignUpActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.title = getString(R.string.sign_up)
-
         binding.signUpButton.setOnClickListener {
             if (isEmailValid() && isUsernameValid() && isPasswordValid()) {
                 sendRegisterRequest()
@@ -40,6 +39,7 @@ class SignUpActivity : AppCompatActivity() {
         }
         binding.alreadyHaveAnAccountButton.setOnClickListener {
             startActivity(Intent(this, LogInActivity::class.java))
+            finish()
         }
     }
 
@@ -61,7 +61,6 @@ class SignUpActivity : AppCompatActivity() {
                     userStore.saveJwt(response.body()!!.jwt)
                 } else {
                     val errorBody = response.errorBody()!!.string()
-
                     val errorResponse = try {
                         GsonBuilder()
                             .create()
@@ -69,7 +68,6 @@ class SignUpActivity : AppCompatActivity() {
                     } catch (ex: JsonSyntaxException) {
                         null
                     }
-
                     val errorMessageToDisplay = when (errorResponse) {
                         null -> getString(R.string.unexpected_error_occurred)
                         else -> {
@@ -81,7 +79,6 @@ class SignUpActivity : AppCompatActivity() {
                             }
                         }
                     }
-
                     Snackbar.make(binding.root, errorMessageToDisplay, LENGTH_LONG).show()
                 }
             }
