@@ -54,7 +54,6 @@ class LogInActivity : AppCompatActivity() {
                 response: Response<LoginResponse>
             ) {
                 if (response.isSuccessful) {
-                    showSnackbar(R.string.successful)
                     saveJwt(response.body()!!.jwt)
                     navigateToNoteList()
                 } else {
@@ -89,8 +88,6 @@ class LogInActivity : AppCompatActivity() {
     private fun showSnackbar(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
-
-    private fun showSnackbar(messageResId: Int) = showSnackbar(getString(messageResId))
 
     private fun saveJwt(jwt: String) {
         val userStore = UserStore(this@LogInActivity)
