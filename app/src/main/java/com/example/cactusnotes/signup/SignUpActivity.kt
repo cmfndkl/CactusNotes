@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.SignUpActivityBinding
 import com.example.cactusnotes.login.LogInActivity
+import com.example.cactusnotes.note.list.NoteListActivity
 import com.example.cactusnotes.service.api
 import com.example.cactusnotes.signup.data.RegisterErrorResponse
 import com.example.cactusnotes.signup.data.RegisterRequest
@@ -27,12 +28,19 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: SignUpActivityBinding
 
+    val userStore = UserStore(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (userStore.getJwt() != null) {
+            navigateToNoteList()
+            return
+        }
+
         binding = SignUpActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.title = getString(R.string.sign_up)
-
         binding.signUpButton.setOnClickListener {
             if (isEmailValid() && isUsernameValid() && isPasswordValid()) {
                 sendRegisterRequest()
@@ -40,7 +48,13 @@ class SignUpActivity : AppCompatActivity() {
         }
         binding.alreadyHaveAnAccountButton.setOnClickListener {
             startActivity(Intent(this, LogInActivity::class.java))
+            finish()
         }
+    }
+
+    private fun navigateToNoteList() {
+        startActivity(Intent(this, NoteListActivity::class.java))
+        finish()
     }
 
     private fun sendRegisterRequest() {
@@ -56,12 +70,10 @@ class SignUpActivity : AppCompatActivity() {
                 response: Response<RegisterResponse>
             ) {
                 if (response.isSuccessful) {
-                    Snackbar.make(binding.root, R.string.successful, LENGTH_LONG).show()
-                    val userStore = UserStore(this@SignUpActivity)
                     userStore.saveJwt(response.body()!!.jwt)
+                    navigateToNoteList()
                 } else {
                     val errorBody = response.errorBody()!!.string()
-
                     val errorResponse = try {
                         GsonBuilder()
                             .create()
@@ -69,7 +81,6 @@ class SignUpActivity : AppCompatActivity() {
                     } catch (ex: JsonSyntaxException) {
                         null
                     }
-
                     val errorMessageToDisplay = when (errorResponse) {
                         null -> getString(R.string.unexpected_error_occurred)
                         else -> {
@@ -81,7 +92,6 @@ class SignUpActivity : AppCompatActivity() {
                             }
                         }
                     }
-
                     Snackbar.make(binding.root, errorMessageToDisplay, LENGTH_LONG).show()
                 }
             }

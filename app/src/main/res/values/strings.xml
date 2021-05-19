@@ -32,4 +32,6 @@
     <string name="note_list_bar">Cactus Notes</string>
     <string name="any_notes">You don\'t have any notes. Click below button to add one!</string>
     <string name="offline_note_error">Couldn\'t connect to the servers. Please check your connection.</string>
+    <string name="your_session_is_expired">Your session is expired. Please log in.</string>
+    <string name="retry">Retry</string>
 </resources>

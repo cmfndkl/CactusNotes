@@ -1,4 +1,4 @@
-package com.example.cactusnotes.userstore
+package com.example.cactusnotes
 
 import android.app.Application
 import com.example.cactusnotes.service.generateApi
