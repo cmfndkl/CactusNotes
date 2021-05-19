@@ -24,7 +24,7 @@ import retrofit2.Response
 class NoteListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoteListBinding
 
-    private val adapter = NotesAdapter()
+    private val notesAdapter = NotesAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class NoteListActivity : AppCompatActivity() {
 
     private fun RecyclerView.setUp() {
         addItemDecoration(NotesItemDecoration())
-        adapter = adapter
+        adapter = notesAdapter
         layoutManager = StaggeredGridLayoutManager(2, VERTICAL)
     }
 
@@ -100,8 +100,15 @@ class NoteListActivity : AppCompatActivity() {
     private fun navigateToLogin() = startActivity(Intent(this, LogInActivity::class.java))
 
     fun NoteListState.applyState() {
-        if (notes != null) adapter.submitList(notes)
-        if (imageResId != null) binding.imageView.setImageResource(imageResId)
+        if (notes != null) notesAdapter.submitList(notes)
+
+        if (imageResId == null) {
+            binding.imageView.isVisible = false
+        } else {
+            binding.imageView.setImageResource(imageResId)
+            binding.imageView.isVisible = true
+        }
+
         if (errorState != null) {
             val snackbar =
                 Snackbar.make(binding.root, errorState.errorMessage, errorState.errorMessage)

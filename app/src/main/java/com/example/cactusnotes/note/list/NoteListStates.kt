@@ -10,7 +10,8 @@ val loadingState = NoteListState().copy(
 
 val emptyState = NoteListState(
     notes = emptyList(),
-    imageResId = R.drawable.cactus_online
+    imageResId = R.drawable.cactus_online,
+    emptyTextVisible = true
 )
 
 fun successState(notes: List<NoteItem>) = NoteListState().copy(
