@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager.VERTICAL
+import com.example.cactusnotes.EditNoteActivity
 import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.ActivityNoteListBinding
 import com.example.cactusnotes.login.LogInActivity
@@ -36,6 +37,10 @@ class NoteListActivity : AppCompatActivity() {
         binding.recyclerView.setUp()
 
         fetchProducts()
+
+        binding.floatingButton.setOnClickListener {
+            startActivity(Intent(this, EditNoteActivity::class.java))
+        }
     }
 
     private fun RecyclerView.setUp() {
@@ -70,6 +75,7 @@ class NoteListActivity : AppCompatActivity() {
         val noteItems = notes.map {
             NoteItem(content = it.content, title = it.title)
         }
+
 
         if (noteItems.isEmpty()) {
             emptyState.applyState()
