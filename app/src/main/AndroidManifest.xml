@@ -13,9 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CactusNotes">
         <activity
-            android:windowSoftInputMode="stateVisible|adjustResize"
             android:name=".EditNoteActivity"
-            android:exported="true" />
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".note.list.NoteListActivity" />
         <activity
             android:name=".login.LogInActivity"

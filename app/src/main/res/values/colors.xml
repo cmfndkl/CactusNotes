@@ -11,4 +11,5 @@
     <color name="dark_green">#003D00</color>
     <color name="orange">#E65100</color>
     <color name="grey">#F0F0F0</color>
+    <color name="stroke_color">#1F000000</color>
 </resources>

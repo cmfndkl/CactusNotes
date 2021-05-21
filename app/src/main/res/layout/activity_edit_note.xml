@@ -9,33 +9,37 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
+        style="@style/CactusNoteCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp">
+        android:layout_margin="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp">
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:fontFamily="sans-serif-medium"
+                android:hint="@string/empty_title"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:lines="1" />
 
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/empty_title" />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:hint="@string/empty_note" />
-            </LinearLayout>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/empty_note"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
-
 </LinearLayout>

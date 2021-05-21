@@ -75,8 +75,6 @@ class NoteListActivity : AppCompatActivity() {
         val noteItems = notes.map {
             NoteItem(content = it.content, title = it.title)
         }
-
-
         if (noteItems.isEmpty()) {
             emptyState.applyState()
         } else {
