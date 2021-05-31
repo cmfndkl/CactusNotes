@@ -1,6 +1,6 @@
 package com.example.cactusnotes
 
-data class NotesRequest(
+data class CreateNoteRequest(
     val title: String,
     val content: String
 )
