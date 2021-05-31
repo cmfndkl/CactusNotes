@@ -5,10 +5,19 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.example.cactusnotes.databinding.ActivityEditNoteBinding
+import com.example.cactusnotes.login.data.LoginErrorResponse
+import com.example.cactusnotes.login.data.LoginResponse
 import com.example.cactusnotes.note.list.NoteListActivity
+import com.example.cactusnotes.service.api
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonSyntaxException
+import retrofit2.Call
+import retrofit2.Response
 
 class EditNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditNoteBinding
@@ -34,6 +43,13 @@ class EditNoteActivity : AppCompatActivity() {
             true
         }
         else -> true
+    }
+
+    private fun noteSendRequest() {
+        val notesRequest = NotesRequest(
+            binding.titleEdittext.editText!!.text.toString(),
+            binding.contentEdittext.editText!!.text.toString()
+        )
     }
 
     private fun deleteDialog() {
