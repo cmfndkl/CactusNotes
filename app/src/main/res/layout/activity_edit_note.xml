@@ -21,8 +21,7 @@
             android:paddingHorizontal="16dp"
             android:paddingVertical="16dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/title_edittext"
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -32,8 +31,7 @@
                 android:inputType="text"
                 android:lines="1" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/content_edittext"
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

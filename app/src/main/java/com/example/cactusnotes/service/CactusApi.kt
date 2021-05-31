@@ -1,6 +1,5 @@
 package com.example.cactusnotes.service
 
-import com.example.cactusnotes.NotesRequest
 import com.example.cactusnotes.login.data.LoginRequest
 import com.example.cactusnotes.login.data.LoginResponse
 import com.example.cactusnotes.note.data.Note
@@ -20,8 +19,4 @@ interface CactusApi {
 
     @GET("/notes")
     fun readAllNotes(): Call<List<Note>>
-
-    @POST("/notes")
-    fun createNote(@Body requestNote: NotesRequest): Call<LoginResponse>
-
 }
