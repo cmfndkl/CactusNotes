@@ -17,6 +17,8 @@ import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import androidx.activity.OnBackPressedCallback
+
 
 class EditNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditNoteBinding
@@ -30,6 +32,11 @@ class EditNoteActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.note_list_bar)
 
         setUpEditTextChangeListeners()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, NoteListActivity::class.java))
+        finish()
     }
 
     private fun setUpEditTextChangeListeners() {

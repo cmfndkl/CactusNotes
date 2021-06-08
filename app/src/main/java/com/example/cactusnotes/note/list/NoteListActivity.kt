@@ -33,13 +33,11 @@ class NoteListActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.title = getString(R.string.note_list_bar)
-
         binding.recyclerView.setUp()
-
         fetchProducts()
-
         binding.floatingButton.setOnClickListener {
             startActivity(Intent(this, EditNoteActivity::class.java))
+            finish()
         }
     }
 
@@ -51,7 +49,6 @@ class NoteListActivity : AppCompatActivity() {
 
     private fun fetchProducts() {
         loadingState.applyState()
-
         api.readAllNotes().enqueue(object : Callback<List<Note>> {
             override fun onResponse(call: Call<List<Note>>, response: Response<List<Note>>) {
                 when (response.code()) {
@@ -105,14 +102,12 @@ class NoteListActivity : AppCompatActivity() {
 
     fun NoteListState.applyState() {
         if (notes != null) notesAdapter.submitList(notes)
-
         if (imageResId == null) {
             binding.imageView.isVisible = false
         } else {
             binding.imageView.setImageResource(imageResId)
             binding.imageView.isVisible = true
         }
-
         if (errorState != null) {
             val snackbar =
                 Snackbar.make(binding.root, errorState.errorMessage, errorState.errorMessage)
