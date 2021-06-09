@@ -9,12 +9,16 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager.VERTICAL
-import com.example.cactusnotes.EditNoteActivity
 import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.ActivityNoteListBinding
 import com.example.cactusnotes.login.LogInActivity
 import com.example.cactusnotes.note.NoteItem
 import com.example.cactusnotes.note.data.Note
+import com.example.cactusnotes.note.edit.EditNoteActivity
+import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.INTENT_KEY_NOTE
+import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.REQUEST_CODE_CREATE
+import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.RESULT_CREATED
+import com.example.cactusnotes.note.toNoteItem
 import com.example.cactusnotes.service.api
 import com.example.cactusnotes.userstore.UserStore
 import com.google.android.material.snackbar.Snackbar
@@ -36,8 +40,17 @@ class NoteListActivity : AppCompatActivity() {
         binding.recyclerView.setUp()
         fetchProducts()
         binding.floatingButton.setOnClickListener {
-            startActivity(Intent(this, EditNoteActivity::class.java))
-            finish()
+            val intent = Intent(this, EditNoteActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_CREATE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE_CREATE && resultCode == RESULT_CREATED) {
+            val createdNote = data!!.getSerializableExtra(INTENT_KEY_NOTE) as NoteItem
+            notesAdapter.onNoteCreated(createdNote)
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
@@ -69,9 +82,7 @@ class NoteListActivity : AppCompatActivity() {
     }
 
     private fun onSuccess(notes: List<Note>) {
-        val noteItems = notes.map {
-            NoteItem(content = it.content, title = it.title)
-        }
+        val noteItems = notes.map { it.toNoteItem() }
         if (noteItems.isEmpty()) {
             emptyState.applyState()
         } else {

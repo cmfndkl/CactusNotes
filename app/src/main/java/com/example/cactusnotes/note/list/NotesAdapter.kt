@@ -7,10 +7,10 @@ import com.example.cactusnotes.databinding.LayoutGridItemBinding
 import com.example.cactusnotes.note.NoteItem
 
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesHolder>() {
-    private var noteList: List<NoteItem> = emptyList()
+    private var noteList: MutableList<NoteItem> = mutableListOf()
 
     fun submitList(notes: List<NoteItem>) {
-        noteList = notes
+        noteList = notes.toMutableList()
         notifyDataSetChanged()
     }
 
@@ -26,6 +26,11 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesHolder>() {
     }
 
     override fun getItemCount(): Int = noteList.size
+
+    fun onNoteCreated(createdNote: NoteItem) {
+        noteList.add(createdNote)
+        notifyItemInserted(noteList.size - 1)
+    }
 
     class NotesHolder(val binding: LayoutGridItemBinding) : RecyclerView.ViewHolder(binding.root)
 }
