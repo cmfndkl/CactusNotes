@@ -1,4 +1,4 @@
-package com.example.cactusnotes
+package com.example.cactusnotes.note.edit
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,15 +9,16 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.ActivityEditNoteBinding
 import com.example.cactusnotes.note.data.Note
 import com.example.cactusnotes.note.list.NoteListActivity
+import com.example.cactusnotes.note.toNoteItem
 import com.example.cactusnotes.service.api
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import androidx.activity.OnBackPressedCallback
 
 
 class EditNoteActivity : AppCompatActivity() {
@@ -32,11 +33,6 @@ class EditNoteActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.note_list_bar)
 
         setUpEditTextChangeListeners()
-    }
-
-    override fun onBackPressed() {
-        startActivity(Intent(this, NoteListActivity::class.java))
-        finish()
     }
 
     private fun setUpEditTextChangeListeners() {
@@ -79,6 +75,10 @@ class EditNoteActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Note>, response: Response<Note>) {
                 if (response.isSuccessful) {
                     state = NoteState.EDITING
+
+                    val data = Intent()
+                    data.putExtra(INTENT_KEY_NOTE, response.body()!!.toNoteItem())
+                    setResult(RESULT_CREATED, data)
                 } else {
                     Snackbar.make(
                         binding.root,
@@ -117,5 +117,11 @@ class EditNoteActivity : AppCompatActivity() {
         CREATING,
         EDITING,
         IN_PROGRESS
+    }
+
+    companion object {
+        const val REQUEST_CODE_CREATE = 1001
+        const val RESULT_CREATED = 9001
+        const val INTENT_KEY_NOTE = "note"
     }
 }
