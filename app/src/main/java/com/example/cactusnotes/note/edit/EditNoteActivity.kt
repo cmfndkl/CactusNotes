@@ -120,7 +120,6 @@ class EditNoteActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val REQUEST_CODE_CREATE = 1001
         const val RESULT_CREATED = 9001
         const val INTENT_KEY_NOTE = "note"
     }
