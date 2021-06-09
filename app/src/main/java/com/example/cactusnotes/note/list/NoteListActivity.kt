@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +18,6 @@ import com.example.cactusnotes.note.NoteItem
 import com.example.cactusnotes.note.data.Note
 import com.example.cactusnotes.note.edit.EditNoteActivity
 import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.INTENT_KEY_NOTE
-import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.REQUEST_CODE_CREATE
 import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.RESULT_CREATED
 import com.example.cactusnotes.note.toNoteItem
 import com.example.cactusnotes.service.api
@@ -31,6 +32,14 @@ class NoteListActivity : AppCompatActivity() {
 
     private val notesAdapter = NotesAdapter()
 
+    private val startForResult =
+        registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == RESULT_CREATED) {
+                val createdNote = result.data!!.getSerializableExtra(INTENT_KEY_NOTE) as NoteItem
+                notesAdapter.onNoteCreated(createdNote)
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNoteListBinding.inflate(layoutInflater)
@@ -41,16 +50,7 @@ class NoteListActivity : AppCompatActivity() {
         fetchProducts()
         binding.floatingButton.setOnClickListener {
             val intent = Intent(this, EditNoteActivity::class.java)
-            startActivityForResult(intent, REQUEST_CODE_CREATE)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_CREATE && resultCode == RESULT_CREATED) {
-            val createdNote = data!!.getSerializableExtra(INTENT_KEY_NOTE) as NoteItem
-            notesAdapter.onNoteCreated(createdNote)
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
+            startForResult.launch(intent)
         }
     }
 
