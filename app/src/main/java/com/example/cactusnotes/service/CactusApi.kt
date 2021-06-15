@@ -4,12 +4,11 @@ import com.example.cactusnotes.login.data.LoginRequest
 import com.example.cactusnotes.login.data.LoginResponse
 import com.example.cactusnotes.note.data.Note
 import com.example.cactusnotes.note.edit.CreateNoteRequest
+import com.example.cactusnotes.note.edit.EditNoteRequest
 import com.example.cactusnotes.signup.data.RegisterRequest
 import com.example.cactusnotes.signup.data.RegisterResponse
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface CactusApi {
     @POST("/auth/local/register")
@@ -23,4 +22,7 @@ interface CactusApi {
 
     @POST("/notes")
     fun createNote(@Body requestNote: CreateNoteRequest): Call<Note>
+
+    @PUT("/notes/{noteId}")
+    fun editNote(@Body note: EditNoteRequest, @Path("noteId") noteId: Int): Call<Note>
 }
