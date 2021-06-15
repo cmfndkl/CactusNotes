@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CactusNotes</string>
     <string name="already_have_an_account">ALREADY HAVE AN ACCOUNT?</string>
-    <string name="sign_up">Sign Up</string>
+    <string name="sign_up">SIGN UP</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="e_mail">E-mail</string>
@@ -39,5 +39,6 @@
     <string name="alert_dialog_message">This action is irreversable. Are you sure you want to delete this note?</string>
     <string name="cancel">CANCEL</string>
     <string name="delete">DELETE</string>
+    <string name="cannot_create_note">Cannot create this note. Some error occured.</string>
 
 </resources>

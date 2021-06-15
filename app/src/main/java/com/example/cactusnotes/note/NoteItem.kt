@@ -1,3 +1,5 @@
 package com.example.cactusnotes.note
 
-data class NoteItem(var title: String, var content: String)
+import java.io.Serializable
+
+data class NoteItem(var title: String, var content: String) : Serializable

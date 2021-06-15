@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/grey"
     android:orientation="vertical"
-    tools:context=".EditNoteActivity">
+    tools:context=".note.edit.EditNoteActivity">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
@@ -22,24 +22,27 @@
             android:paddingVertical="16dp">
 
             <EditText
-                android:layout_width="wrap_content"
+                android:id="@+id/titleText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:fontFamily="sans-serif-medium"
                 android:hint="@string/empty_title"
                 android:importantForAutofill="no"
-                android:inputType="text"
-                android:lines="1" />
+                android:inputType="textCapSentences"
+                android:lines="1"
+                android:paddingBottom="8dp" />
 
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:id="@+id/contentText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@null"
                 android:fontFamily="sans-serif-light"
+                android:gravity="top|start"
                 android:hint="@string/empty_note"
                 android:importantForAutofill="no"
-                android:inputType="textMultiLine" />
+                android:inputType="textCapSentences|textMultiLine" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>
