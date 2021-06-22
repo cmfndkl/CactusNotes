@@ -19,6 +19,7 @@ import com.example.cactusnotes.note.data.Note
 import com.example.cactusnotes.note.edit.EditNoteActivity
 import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.INTENT_KEY_NOTE
 import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.RESULT_CREATED
+import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.RESULT_EDITED
 import com.example.cactusnotes.note.toNoteItem
 import com.example.cactusnotes.service.api
 import com.example.cactusnotes.userstore.UserStore
@@ -34,9 +35,16 @@ class NoteListActivity : AppCompatActivity() {
 
     private val startForResult =
         registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == RESULT_CREATED) {
-                val createdNote = result.data!!.getSerializableExtra(INTENT_KEY_NOTE) as NoteItem
-                notesAdapter.onNoteCreated(createdNote)
+            when (result.resultCode) {
+                RESULT_CREATED -> {
+                    val createdNote =
+                        result.data!!.getSerializableExtra(INTENT_KEY_NOTE) as NoteItem
+                    notesAdapter.onNoteCreated(createdNote)
+                }
+                RESULT_EDITED -> {
+                    val editedNote = result.data!!.getSerializableExtra(INTENT_KEY_NOTE) as NoteItem
+                    notesAdapter.onNoteEdited(editedNote)
+                }
             }
         }
 
@@ -48,6 +56,7 @@ class NoteListActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.note_list_bar)
         binding.recyclerView.setUp()
         fetchProducts()
+
         binding.floatingButton.setOnClickListener {
             val intent = Intent(this, EditNoteActivity::class.java)
             startForResult.launch(intent)
@@ -58,6 +67,12 @@ class NoteListActivity : AppCompatActivity() {
         addItemDecoration(NotesItemDecoration())
         adapter = notesAdapter
         layoutManager = StaggeredGridLayoutManager(2, VERTICAL)
+
+        notesAdapter.itemClickListener = { noteItem: NoteItem ->
+            val intent = Intent(this@NoteListActivity, EditNoteActivity::class.java)
+            intent.putExtra(INTENT_KEY_NOTE, noteItem)
+            startForResult.launch(intent)
+        }
     }
 
     private fun fetchProducts() {

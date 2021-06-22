@@ -39,6 +39,15 @@ class EditNoteActivity : AppCompatActivity() {
         setUpEditTextChangeListeners()
 
         noteItem = intent.getSerializableExtra(INTENT_KEY_NOTE) as NoteItem?
+
+        loadNoteItemIfNotNull()
+    }
+
+    private fun loadNoteItemIfNotNull() {
+        if (noteItem != null) {
+            binding.titleText.setText(noteItem!!.title)
+            binding.contentText.setText(noteItem!!.content)
+        }
     }
 
     private fun setUpEditTextChangeListeners() {
@@ -88,6 +97,10 @@ class EditNoteActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             Log.e("EditNoteActivity", "Edit operation successful")
                             noteItem = response.body()!!.toNoteItem()
+
+                            val data = Intent()
+                            data.putExtra(INTENT_KEY_NOTE, noteItem!!)
+                            setResult(RESULT_EDITED, data)
                         } else {
                             Snackbar.make(
                                 binding.root,
@@ -168,6 +181,7 @@ class EditNoteActivity : AppCompatActivity() {
 
     companion object {
         const val RESULT_CREATED = 9001
+        const val RESULT_EDITED = 9002
         const val INTENT_KEY_NOTE = "note"
     }
 }
