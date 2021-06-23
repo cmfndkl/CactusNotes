@@ -18,8 +18,7 @@ import com.example.cactusnotes.note.NoteItem
 import com.example.cactusnotes.note.data.Note
 import com.example.cactusnotes.note.edit.EditNoteActivity
 import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.INTENT_KEY_NOTE
-import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.RESULT_CREATED
-import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.RESULT_EDITED
+import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.RESULT_NOTE
 import com.example.cactusnotes.note.toNoteItem
 import com.example.cactusnotes.service.api
 import com.example.cactusnotes.userstore.UserStore
@@ -36,14 +35,19 @@ class NoteListActivity : AppCompatActivity() {
     private val startForResult =
         registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
             when (result.resultCode) {
-                RESULT_CREATED -> {
-                    val createdNote =
-                        result.data!!.getSerializableExtra(INTENT_KEY_NOTE) as NoteItem
-                    notesAdapter.onNoteCreated(createdNote)
-                }
-                RESULT_EDITED -> {
-                    val editedNote = result.data!!.getSerializableExtra(INTENT_KEY_NOTE) as NoteItem
-                    notesAdapter.onNoteEdited(editedNote)
+                RESULT_NOTE -> {
+
+                    val note = result.data!!.getSerializableExtra(INTENT_KEY_NOTE) as? NoteItem
+
+                    if (note != null && !notesAdapter.containsExactly(note)) {
+                        if (notesAdapter.containsNote(note)) {
+                            notesAdapter.onNoteEdited(note)
+                        } else {
+                            notesAdapter.onNoteCreated(note)
+                        }
+
+                        binding.recyclerView.scrollToPosition(0)
+                    }
                 }
             }
         }
