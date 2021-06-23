@@ -28,6 +28,12 @@ class EditNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditNoteBinding
 
     var noteItem: NoteItem? = null
+        set(value) {
+            setAsActivityResult(value)
+
+            field = value
+        }
+
     var isCreating = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,10 +103,6 @@ class EditNoteActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             Log.e("EditNoteActivity", "Edit operation successful")
                             noteItem = response.body()!!.toNoteItem()
-
-                            val data = Intent()
-                            data.putExtra(INTENT_KEY_NOTE, noteItem!!)
-                            setResult(RESULT_EDITED, data)
                         } else {
                             Snackbar.make(
                                 binding.root,
@@ -122,6 +124,12 @@ class EditNoteActivity : AppCompatActivity() {
         }, 300)
     }
 
+    private fun setAsActivityResult(value: NoteItem?) {
+        val data = Intent()
+        data.putExtra(INTENT_KEY_NOTE, value)
+        setResult(RESULT_NOTE, data)
+    }
+
     private fun sendCreateNoteRequest() {
         isCreating = true
 
@@ -137,10 +145,6 @@ class EditNoteActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Log.e("EditNoteActivity", "Create operation successful")
                     noteItem = response.body()!!.toNoteItem()
-
-                    val data = Intent()
-                    data.putExtra(INTENT_KEY_NOTE, noteItem!!)
-                    setResult(RESULT_CREATED, data)
 
                     if (noteItem!!.title != binding.titleText.text.toString()
                         || noteItem!!.content != binding.contentText.text.toString()
@@ -180,8 +184,7 @@ class EditNoteActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val RESULT_CREATED = 9001
-        const val RESULT_EDITED = 9002
+        const val RESULT_NOTE = 9001
         const val INTENT_KEY_NOTE = "note"
     }
 }
