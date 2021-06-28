@@ -16,7 +16,6 @@ import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.ActivityEditNoteBinding
 import com.example.cactusnotes.note.NoteItem
 import com.example.cactusnotes.note.data.Note
-import com.example.cactusnotes.note.list.NoteListActivity
 import com.example.cactusnotes.note.toNoteItem
 import com.example.cactusnotes.service.api
 import com.google.android.material.snackbar.Snackbar
@@ -24,7 +23,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
+// TODO: editNote and createNote should use repository functions
 class EditNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditNoteBinding
 
