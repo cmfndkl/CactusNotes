@@ -45,7 +45,6 @@ class NoteListActivity : AppCompatActivity() {
                         } else {
                             notesAdapter.onNoteCreated(note)
                         }
-
                         binding.recyclerView.scrollToPosition(0)
                     }
                 }
@@ -141,13 +140,11 @@ class NoteListActivity : AppCompatActivity() {
         if (errorState != null) {
             val snackbar =
                 Snackbar.make(binding.root, errorState.errorMessage, errorState.errorMessage)
-
             if (errorState.errorAction != null) {
                 snackbar.setAction(errorState.errorAction.errorActionText) {
                     errorState.errorAction.errorAction()
                 }
             }
-
             snackbar.show()
         }
         binding.emptyText.isVisible = emptyTextVisible

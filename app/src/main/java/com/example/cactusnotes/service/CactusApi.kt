@@ -25,4 +25,7 @@ interface CactusApi {
 
     @PUT("/notes/{noteId}")
     fun editNote(@Body note: EditNoteRequest, @Path("noteId") noteId: Int): Call<Note>
+
+    @DELETE("/notes/{noteId}")
+    fun deleteNote(@Path("noteId") noteId: Int): Call<Note>
 }

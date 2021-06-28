@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -30,7 +31,6 @@ class EditNoteActivity : AppCompatActivity() {
     var noteItem: NoteItem? = null
         set(value) {
             setAsActivityResult(value)
-
             field = value
         }
 
@@ -66,7 +66,6 @@ class EditNoteActivity : AppCompatActivity() {
                 }
             }
         }
-
         binding.titleText.addTextChangedListener(afterTextChanged = textChangeListener)
         binding.contentText.addTextChangedListener(afterTextChanged = textChangeListener)
     }
@@ -176,8 +175,33 @@ class EditNoteActivity : AppCompatActivity() {
         val alert = AlertDialog.Builder(this)
         alert.setMessage(R.string.alert_dialog_message)
         alert.setPositiveButton(R.string.delete) { dialog, which ->
-            startActivity(Intent(this, NoteListActivity::class.java))
-            finish()
+            api.deleteNote(noteItem!!.id).enqueue(object : Callback<Note> {
+                override fun onResponse(call: Call<Note>, response: Response<Note>) {
+                    if (response.isSuccessful) {
+                        var noteTitle = noteItem!!.title
+                        Toast.makeText(
+                            applicationContext,
+                            "Your note: $noteTitle is deleted now.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        Snackbar.make(
+                            binding.root,
+                            R.string.error_delete,
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                    finish()
+                }
+
+                override fun onFailure(call: Call<Note>, t: Throwable) {
+                    Snackbar.make(
+                        binding.root,
+                        R.string.connectivity_problems_message,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            })
         }
         alert.setNegativeButton(R.string.cancel) { dialog, which -> false }
         alert.show()
