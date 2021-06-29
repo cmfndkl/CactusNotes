@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -15,42 +14,22 @@ import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.ActivityNoteListBinding
 import com.example.cactusnotes.login.LogInActivity
 import com.example.cactusnotes.note.NoteItem
+import com.example.cactusnotes.note.NoteRepository
 import com.example.cactusnotes.note.data.Note
 import com.example.cactusnotes.note.edit.EditNoteActivity
 import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.INTENT_KEY_NOTE
-import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.RESULT_NOTE
 import com.example.cactusnotes.note.toNoteItem
-import com.example.cactusnotes.service.api
 import com.example.cactusnotes.userstore.UserStore
 import com.google.android.material.snackbar.Snackbar
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class NoteListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoteListBinding
 
     private val notesAdapter = NotesAdapter()
 
-    private val startForResult =
-        registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
-            when (result.resultCode) {
-                RESULT_NOTE -> {
-
-                    val note = result.data!!.getSerializableExtra(INTENT_KEY_NOTE) as? NoteItem
-
-                    if (note != null && !notesAdapter.containsExactly(note)) {
-                        if (notesAdapter.containsNote(note)) {
-                            notesAdapter.onNoteEdited(note)
-                        } else {
-                            notesAdapter.onNoteCreated(note)
-                        }
-
-                        binding.recyclerView.scrollToPosition(0)
-                    }
-                }
-            }
-        }
+    private val startForResult = registerForActivityResult(StartActivityForResult()) {
+        fetchNotes(forceUpdate = false)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +38,7 @@ class NoteListActivity : AppCompatActivity() {
 
         supportActionBar?.title = getString(R.string.note_list_bar)
         binding.recyclerView.setUp()
-        fetchProducts()
+        fetchNotes(forceUpdate = true)
 
         binding.floatingButton.setOnClickListener {
             val intent = Intent(this, EditNoteActivity::class.java)
@@ -79,24 +58,30 @@ class NoteListActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchProducts() {
+    private fun fetchNotes(forceUpdate: Boolean) {
         loadingState.applyState()
-        api.readAllNotes().enqueue(object : Callback<List<Note>> {
-            override fun onResponse(call: Call<List<Note>>, response: Response<List<Note>>) {
-                when (response.code()) {
-                    200 -> onSuccess(response.body()!!)
-                    401 -> tokenExpiredState {
+
+        NoteRepository.fetchNotes(forceUpdate, object : NoteRepository.NotesCallback<List<Note>> {
+            override fun onSuccess(body: List<Note>, source: NoteRepository.DataSource) {
+                onSuccess(body)
+            }
+
+            override fun onError(responseCode: Int) {
+                if (responseCode == 401) {
+                    tokenExpiredState {
                         navigateToLogin()
                     }.applyState()
-                    else -> unexpectedErrorState.applyState()
+                } else {
+                    unexpectedErrorState.applyState()
                 }
             }
 
-            override fun onFailure(call: Call<List<Note>>, t: Throwable) {
+            override fun onFailure() {
                 connectivityProblemState {
-                    fetchProducts()
+                    fetchNotes(forceUpdate = true)
                 }.applyState()
             }
+
         })
     }
 
@@ -141,13 +126,11 @@ class NoteListActivity : AppCompatActivity() {
         if (errorState != null) {
             val snackbar =
                 Snackbar.make(binding.root, errorState.errorMessage, errorState.errorMessage)
-
             if (errorState.errorAction != null) {
                 snackbar.setAction(errorState.errorAction.errorActionText) {
                     errorState.errorAction.errorAction()
                 }
             }
-
             snackbar.show()
         }
         binding.emptyText.isVisible = emptyTextVisible

@@ -41,5 +41,6 @@
     <string name="delete">DELETE</string>
     <string name="cannot_create_note">Cannot create this note. Some error occured.</string>
     <string name="cannot_edit_note">Some error occured. Cannot edit note.</string>
+    <string name="error_delete">Error occurred. Cannot delete note.</string>
 
 </resources>

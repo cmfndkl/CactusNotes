@@ -1,38 +1,28 @@
 package com.example.cactusnotes.note.edit
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.example.cactusnotes.R
 import com.example.cactusnotes.databinding.ActivityEditNoteBinding
 import com.example.cactusnotes.note.NoteItem
+import com.example.cactusnotes.note.NoteRepository
+import com.example.cactusnotes.note.NoteRepository.NotesCallback
 import com.example.cactusnotes.note.data.Note
-import com.example.cactusnotes.note.list.NoteListActivity
 import com.example.cactusnotes.note.toNoteItem
-import com.example.cactusnotes.service.api
 import com.google.android.material.snackbar.Snackbar
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
 
 class EditNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditNoteBinding
 
     var noteItem: NoteItem? = null
-        set(value) {
-            setAsActivityResult(value)
-
-            field = value
-        }
 
     var isCreating = false
 
@@ -66,7 +56,6 @@ class EditNoteActivity : AppCompatActivity() {
                 }
             }
         }
-
         binding.titleText.addTextChangedListener(afterTextChanged = textChangeListener)
         binding.contentText.addTextChangedListener(afterTextChanged = textChangeListener)
     }
@@ -82,109 +71,128 @@ class EditNoteActivity : AppCompatActivity() {
             true
         }
         R.id.delete_button -> {
-            deleteDialog()
+            showDeleteDialog()
             true
         }
         else -> true
     }
 
     private fun scheduleEditNoteRequest() {
-        val request = EditNoteRequest(
-            binding.titleText.text.toString(),
-            binding.contentText.text.toString()
-        )
-
-        Log.e("EditNoteActivity", "New edit scheduled:\n${request.title}\n${request.content}")
+        val title = binding.titleText.text.toString()
+        val content = binding.contentText.text.toString()
 
         Handler(mainLooper).postDelayed({
-            if (request.title == binding.titleText.text.toString() && request.content == binding.contentText.text.toString()) {
-                api.editNote(request, noteItem!!.id).enqueue(object : Callback<Note> {
-                    override fun onResponse(call: Call<Note>, response: Response<Note>) {
-                        if (response.isSuccessful) {
-                            Log.e("EditNoteActivity", "Edit operation successful")
-                            noteItem = response.body()!!.toNoteItem()
-                        } else {
+            if (title == binding.titleText.text.toString() && content == binding.contentText.text.toString()) {
+                NoteRepository.editNote(
+                    noteItem!!.id,
+                    title,
+                    content,
+                    object : NotesCallback<Note> {
+                        override fun onSuccess(body: Note, source: NoteRepository.DataSource) {
+                            noteItem = body.toNoteItem()
+                        }
+
+                        override fun onError(responseCode: Int) {
                             Snackbar.make(
                                 binding.root,
                                 R.string.cannot_create_note,
                                 Snackbar.LENGTH_LONG
                             ).show()
                         }
-                    }
 
-                    override fun onFailure(call: Call<Note>, t: Throwable) {
-                        Snackbar.make(
-                            binding.root,
-                            R.string.connectivity_problems_message,
-                            Snackbar.LENGTH_LONG
-                        ).show()
-                    }
-                })
+                        override fun onFailure() {
+                            Snackbar.make(
+                                binding.root,
+                                R.string.connectivity_problems_message,
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
             }
         }, 300)
-    }
-
-    private fun setAsActivityResult(value: NoteItem?) {
-        val data = Intent()
-        data.putExtra(INTENT_KEY_NOTE, value)
-        setResult(RESULT_NOTE, data)
     }
 
     private fun sendCreateNoteRequest() {
         isCreating = true
 
-        val request = CreateNoteRequest(
-            binding.titleText.text.toString(),
-            binding.contentText.text.toString()
-        )
+        val title = binding.titleText.text.toString()
+        val content = binding.contentText.text.toString()
 
-        Log.e("EditNoteActivity", "New note create request:\n${request.title}\n${request.content}")
-
-        api.createNote(request).enqueue(object : Callback<Note> {
-            override fun onResponse(call: Call<Note>, response: Response<Note>) {
-                if (response.isSuccessful) {
-                    Log.e("EditNoteActivity", "Create operation successful")
-                    noteItem = response.body()!!.toNoteItem()
-
-                    if (noteItem!!.title != binding.titleText.text.toString()
-                        || noteItem!!.content != binding.contentText.text.toString()
-                    ) {
-                        scheduleEditNoteRequest()
-                    }
-
-                } else {
-                    Snackbar.make(
-                        binding.root,
-                        R.string.cannot_create_note,
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
+        NoteRepository.createNote(title, content, object : NotesCallback<Note> {
+            override fun onSuccess(body: Note, source: NoteRepository.DataSource) {
                 isCreating = false
+
+                noteItem = body.toNoteItem()
+
+                if (noteItem!!.title != binding.titleText.text.toString()
+                    || noteItem!!.content != binding.contentText.text.toString()
+                ) {
+                    scheduleEditNoteRequest()
+                }
             }
 
-            override fun onFailure(call: Call<Note>, t: Throwable) {
+            override fun onError(responseCode: Int) {
+                isCreating = false
+
+                Snackbar.make(
+                    binding.root,
+                    R.string.cannot_create_note,
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+
+            override fun onFailure() {
                 Snackbar.make(
                     binding.root,
                     R.string.connectivity_problems_message,
                     Snackbar.LENGTH_LONG
                 ).show()
             }
+
         })
     }
 
-    private fun deleteDialog() {
-        val alert = AlertDialog.Builder(this)
-        alert.setMessage(R.string.alert_dialog_message)
-        alert.setPositiveButton(R.string.delete) { dialog, which ->
-            startActivity(Intent(this, NoteListActivity::class.java))
-            finish()
+    private fun showDeleteDialog() = AlertDialog.Builder(this)
+        .setMessage(R.string.alert_dialog_message)
+        .setPositiveButton(R.string.delete) { _, _ ->
+            deleteNote()
         }
-        alert.setNegativeButton(R.string.cancel) { dialog, which -> false }
-        alert.show()
+        .setNegativeButton(R.string.cancel) { _, _ -> }
+        .show()
+
+    private fun deleteNote() {
+        NoteRepository.deleteNote(noteItem!!.id, object : NotesCallback<Unit> {
+            override fun onSuccess(body: Unit, source: NoteRepository.DataSource) {
+                Toast.makeText(
+                    applicationContext,
+                    "Your note: ${noteItem!!.title} is deleted now.",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                finish()
+            }
+
+            override fun onError(responseCode: Int) {
+                Snackbar.make(
+                    binding.root,
+                    R.string.error_delete,
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+
+            override fun onFailure() {
+                Snackbar.make(
+                    binding.root,
+                    R.string.connectivity_problems_message,
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+
+        })
     }
 
     companion object {
-        const val RESULT_NOTE = 9001
         const val INTENT_KEY_NOTE = "note"
     }
 }

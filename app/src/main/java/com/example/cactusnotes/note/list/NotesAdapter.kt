@@ -32,21 +32,5 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesHolder>() {
 
     override fun getItemCount(): Int = noteList.size
 
-    fun onNoteCreated(createdNote: NoteItem) {
-        noteList.add(0, createdNote)
-        notifyDataSetChanged()
-    }
-
-    fun onNoteEdited(note: NoteItem) {
-        val index = noteList.indexOfFirst { it.id == note.id }
-        noteList.removeAt(index)
-        noteList.add(0, note)
-        notifyItemRangeChanged(0, index + 1)
-    }
-
-    fun containsExactly(note: NoteItem) = noteList.contains(note)
-
-    fun containsNote(note: NoteItem) = noteList.any { it.id == note.id }
-
     class NotesHolder(val binding: LayoutGridItemBinding) : RecyclerView.ViewHolder(binding.root)
 }
