@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -19,7 +18,6 @@ import com.example.cactusnotes.note.NoteRepository
 import com.example.cactusnotes.note.data.Note
 import com.example.cactusnotes.note.edit.EditNoteActivity
 import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.INTENT_KEY_NOTE
-import com.example.cactusnotes.note.edit.EditNoteActivity.Companion.RESULT_NOTE
 import com.example.cactusnotes.note.toNoteItem
 import com.example.cactusnotes.userstore.UserStore
 import com.google.android.material.snackbar.Snackbar
@@ -29,14 +27,9 @@ class NoteListActivity : AppCompatActivity() {
 
     private val notesAdapter = NotesAdapter()
 
-    private val startForResult =
-        registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
-            when (result.resultCode) {
-                RESULT_NOTE -> {
-                    fetchNotes(forceUpdate = false)
-                }
-            }
-        }
+    private val startForResult = registerForActivityResult(StartActivityForResult()) {
+        fetchNotes(forceUpdate = false)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,8 +1,8 @@
 package com.example.cactusnotes.note
 
 import com.example.cactusnotes.note.data.Note
+import com.example.cactusnotes.note.edit.CreateNoteRequest
 import com.example.cactusnotes.note.edit.EditNoteRequest
-
 import com.example.cactusnotes.service.api
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,7 +19,25 @@ object NoteRepository {
         }
     }
 
-    // TODO: createNote function
+    fun createNote(title: String, content: String, callback: NotesCallback<Note>) {
+        val request = CreateNoteRequest(title, content)
+
+        api.createNote(request).enqueue(object : Callback<Note> {
+            override fun onResponse(call: Call<Note>, response: Response<Note>) {
+                if (response.isSuccessful) {
+                    val note = response.body()!!
+                    noteList = noteList!! + note
+                    callback.onSuccess(note, DataSource.API)
+                } else {
+                    callback.onError(response.code())
+                }
+            }
+
+            override fun onFailure(call: Call<Note>, t: Throwable) {
+                callback.onFailure()
+            }
+        })
+    }
 
     fun deleteNote(noteId: Int, callback: NotesCallback<Unit>) {
         api.deleteNote(noteId).enqueue(object : Callback<Note> {
@@ -38,13 +56,13 @@ object NoteRepository {
         })
     }
 
-    fun editNote(note: Note, callback: NotesCallback<Note>) {
-        val editNoteRequest = EditNoteRequest(note.title, note.content)
+    fun editNote(id: Int, title: String, content: String, callback: NotesCallback<Note>) {
+        val editNoteRequest = EditNoteRequest(title, content)
 
-        api.editNote(editNoteRequest, note.id).enqueue(object : Callback<Note> {
+        api.editNote(editNoteRequest, id).enqueue(object : Callback<Note> {
             override fun onResponse(call: Call<Note>, response: Response<Note>) {
                 if (response.isSuccessful) {
-                    noteList = noteList!!.map { if (it.id == note.id) note else it }
+                    noteList = noteList!!.map { if (it.id == id) Note(id, title, content) else it }
                     callback.onSuccess(response.body()!!, DataSource.API)
                 } else {
                     callback.onError(response.code())
