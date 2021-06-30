@@ -66,14 +66,14 @@ class NoteListActivity : AppCompatActivity() {
                 onSuccess(body)
             }
 
-            override fun onError(responseCode: Int) {
-                if (responseCode == 401) {
-                    tokenExpiredState {
-                        navigateToLogin()
-                    }.applyState()
-                } else {
-                    unexpectedErrorState.applyState()
-                }
+            override fun onError(responseCode: Int) = if (responseCode == 401) {
+                tokenExpiredState {
+                    navigateToLogin()
+                    UserStore(this@NoteListActivity).deleteJwt()
+                    finish()
+                }.applyState()
+            } else {
+                unexpectedErrorState.applyState()
             }
 
             override fun onFailure() {
