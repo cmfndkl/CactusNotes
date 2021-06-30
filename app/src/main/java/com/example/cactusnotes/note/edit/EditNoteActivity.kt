@@ -1,5 +1,6 @@
 package com.example.cactusnotes.note.edit
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -68,6 +69,7 @@ class EditNoteActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.share_button -> {
+            share()
             true
         }
         R.id.delete_button -> {
@@ -151,6 +153,16 @@ class EditNoteActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun share() {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, binding.contentText.text.toString())
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     private fun showDeleteDialog() = AlertDialog.Builder(this)
